@@ -5,10 +5,13 @@ on: push
 jobs:
   first_job:
     runs-on: ubuntu-latest
-
+    
+    env:
+     NAME: CodigoFacilito
+     
     steps:
      - name: Hola Mundo
-       run: echo "Hola Mundo"
+       run: echo "Hola Mundo $CodigoFacilito"
 
   second_job:
     needs: first_job
