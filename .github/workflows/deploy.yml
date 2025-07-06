@@ -10,6 +10,13 @@ jobs:
      salida: ${{ steps.step_1.outputs.my_variable }}
 
     steps:
+     - name: Working dir
+       id: step_1
+       run: echo "my_variable=Hola Mundo" >> $GITHUB_OUTPUT
+
+     - name: Obtener mensaje
+       run: echo "${{ steps.step_1.outputs.my_variable }}"
+    
      - name: Generar archivo
        run: |
         echo "Archivo prueba, hola" >> test.log
@@ -20,11 +27,17 @@ jobs:
         name: archivo-test
         path: test.log
 
-  segundo_job:
+  second_job:
     runs-on: ubuntu-latest
     needs: first_job
 
+    env:
+      SALIDA: ${{ needs.first_job.outputs.salida }}"
+
     steps:
+     - name: Hola Mundo
+       run: echo "$SALIDA"
+
      - name: Descargar artefacto
        uses: actions/download-artifact@v4
        with:
